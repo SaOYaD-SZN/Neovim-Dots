@@ -79,8 +79,14 @@ return {
 				jsonls = {},
 				lua_ls = {
 					settings = {
-						lua_ls = {
+						Lua = {
 							format = {
+								enable = false,
+							},
+							workspace = {
+								checkThirdParty = false,
+							},
+							telemetry = {
 								enable = false,
 							},
 						},

@@ -25,14 +25,13 @@ return {
 				auto_install = true,
 				highlight = {
 					enable = true,
-					disable = function(lang)
-						local allowed_filetypes = { "markdown", "vimwiki", "norg", "rst", "markdown_inline" }
-						for _, filetype in ipairs(allowed_filetypes) do
-							if lang == filetype then
-								return false -- Do not disable highlighting for these file types
-							end
+					-- Disable Treesitter highlighting only for very large files
+					disable = function(_, buf)
+						local max_filesize = 1024 * 1024 -- 1 MB
+						local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+						if ok and stats and stats.size > max_filesize then
+							return true
 						end
-						return true -- Disable highlighting for all other file types
 					end,
 				},
 			})

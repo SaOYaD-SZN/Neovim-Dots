@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+-- Use vim.uv (Neovim 0.10+) with fallback to vim.loop for older versions
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
@@ -21,18 +22,22 @@ require("lazy").setup({
 	defaults = {
 		lazy = false,
 		version = false,
-		rocks = {
-			hererocks = true,
-		},
 	},
-	install = { colorscheme = { "tokyonight", "habamax" } },
+	install = { colorscheme = { "catppuccin", "tokyonight", "habamax" } },
 	checker = {
 		enabled = true,
-		notify = true,
+		notify = false, -- notify via statusline / snacks instead of a popup
+	},
+	change_detection = {
+		enabled = true,
+		notify = false, -- suppress noisy config-change notifications
+	},
+	ui = {
+		border = "rounded",
 	},
 	performance = {
 		rtp = {
-			-- disable some rtp plugins
+			-- Disable built-in plugins that are replaced by lazy-loaded equivalents
 			disabled_plugins = {
 				"gzip",
 				-- "matchit",
@@ -46,3 +51,4 @@ require("lazy").setup({
 		},
 	},
 })
+

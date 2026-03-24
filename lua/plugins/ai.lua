@@ -24,21 +24,10 @@ return {
       -- "MeanderingProgrammer/render-markdown.nvim",
     },
     config = function()
-      vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("v", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap(
-        "n",
-        "<LocalLeader>a",
-        "<cmd>CodeCompanionChat Toggle<cr>",
-        { noremap = true, silent = true }
-      )
-      vim.api.nvim_set_keymap(
-        "v",
-        "<LocalLeader>a",
-        "<cmd>CodeCompanionChat Toggle<cr>",
-        { noremap = true, silent = true }
-      )
-      vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+      local map = vim.keymap.set
+      map({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { desc = "CodeCompanion Actions" })
+      map({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "CodeCompanion Chat Toggle" })
+      map("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { desc = "CodeCompanion Chat Add" })
 
       -- Expand 'cc' into 'CodeCompanion' in the command line
       vim.cmd([[cab cc CodeCompanion]])
