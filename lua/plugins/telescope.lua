@@ -16,13 +16,12 @@ return {
 		config = function()
 			local image_preview = require("custom.telescope-preview").setup()
 
-			-- Define the function globally to ensure it is accessible for keymaps
-			_G.find_nvim_files = function()
-				local builtin = require("telescope.builtin")
-				builtin.find_files({
+			-- Find files in the Neovim config directory
+			local function find_nvim_files()
+				require("telescope.builtin").find_files({
 					prompt_title = " Neovim Config",
-					cwd = "~/.config/nvim", -- Set the directory to search in
-					hidden = true, -- Show hidden files, useful in config directories
+					cwd = "~/.config/nvim",
+					hidden = true,
 				})
 			end
 
@@ -105,12 +104,7 @@ return {
 			vim.keymap.set("n", "<C-p>", builtin.find_files, { desc = "Find Files (Telescope)" })
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep (Telescope)" })
 			vim.keymap.set("n", "<leader><leader>", builtin.oldfiles, { desc = "Old Files (Telescope)" })
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader>fc",
-				"<cmd>lua find_nvim_files()<CR>",
-				{ noremap = true, silent = true }
-			)
+			vim.keymap.set("n", "<leader>fc", find_nvim_files, { desc = "Find Neovim Config Files" })
 
 			-- Load extensions
 			require("telescope").load_extension("ui-select")
